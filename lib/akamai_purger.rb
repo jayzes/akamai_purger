@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'optparse'
+require 'cgi'
 require 'soap/wsdlDriver'
 
 class AkamaiPurger
@@ -8,7 +9,7 @@ class AkamaiPurger
   
   def initialize(args)
     opts = OptionParser.new do |opts|
-      opts.banner = "Usage: #{File.basename($0)} [options]"
+      opts.banner = "Usage: #{File.basename($0)} [options] URLs"
 
       opts.on('-h', '--help', 'Show this message') do
         puts opts
@@ -23,27 +24,38 @@ class AkamaiPurger
         @password = pass
       end
       
-      opts.on('-l', '--url [URL]', "Specifies the URL to purge.") do |url|
-        @url = url
+      opts.on('-e', '--email-notification [EMAIL ADDRESSES]', "Specifies the e-mail addresses (comma separated) to receive the purge notification.") do |emails|
+        @emails = emails
       end
-      
       
     end
     
     @args = opts.parse!(args)
+    puts args
+    @urls = args.join(',')
+  end
+  
+  def assemble_options
+    options = []
+    options << "email-notification=#{CGI.escape(@emails)}" if @emails
+    options
   end
   
   def run
-    unless @username && @password && @url
-      puts "User, password, and URL must be supplied!" 
+    unless @username && @password && @urls
+      puts "User, password, and URLs must be supplied!" 
       exit 1
     end
     
-    puts "Sending purge request for #{@url}."
+    puts "Sending purge request for #{@urls}..."
     driver = SOAP::WSDLDriverFactory.new(WSDL_URL).create_rpc_driver
     driver.options["protocol.http.basic_auth"] << [WSDL_URL, @username, @password]
-    result = driver.purgeRequest(@username, @password, '', [], @url)
+    result = driver.purgeRequest(@username, @password, '', assemble_options, @urls.split(','))
     
-    puts "Purge request #{ result.resultCode == '100' ? 'was successful' : 'failed' }."
+    if result.resultCode == '100'
+      puts "Purge request was successful.  Purge should be complete within #{result.estTime} seconds."
+    else
+      puts "Purge request failed with the message '#{result.resultMsg}'."
+    end
   end
 end
