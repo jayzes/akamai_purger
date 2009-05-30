@@ -12,7 +12,6 @@ begin
     gem.authors = ["Jay Zeschin"]
 #    gem.files =  FileList["[A-Z]*", "{bin,generators,lib,test}/**/*"]
     gem.add_dependency 'soap4r'
-    gem.add_dependency 'optparse'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 
