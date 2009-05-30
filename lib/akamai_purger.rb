@@ -34,8 +34,10 @@ class AkamaiPurger
   end
   
   def run
-    
-    puts "User, password, and URL must be supplied!" unless @username && @password && @url
+    unless @username && @password && @url
+      puts "User, password, and URL must be supplied!" 
+      exit 1
+    end
     
     puts "Sending purge request for #{@url}."
     driver = SOAP::WSDLDriverFactory.new(WSDL_URL).create_rpc_driver
