@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "akamai_purger"
     gem.executables = 'akamai_purge'
-    gem.summary = %Q{TODO}
+    gem.summary = "Simple gem for purging Akamai URLs"
     gem.email = "jay.zeschin@factorylabs.com"
     gem.homepage = "http://github.com/jayzes/akamai_purger"
     gem.authors = ["Jay Zeschin"]
