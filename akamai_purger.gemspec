@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "akamai_purger.gemspec",
      "bin/akamai_purge",
      "lib/akamai_purger.rb",
      "test/akamai_purger_test.rb",
