@@ -1,0 +1,7 @@
+= akamai_purger
+
+Description goes here.
+
+== Copyright
+
+Copyright (c) 2009 Jay Zeschin. See LICENSE for details.
