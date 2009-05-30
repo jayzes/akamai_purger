@@ -15,15 +15,15 @@ class AkamaiPurger
         exit 1
       end
       
-      opts.on('-u', '--user=USER', 'Specifies the Akamai username to connect as.') do |user|
+      opts.on('-u', '--user USER', 'Specifies the Akamai username to connect as.') do |user|
         @username = user
       end
       
-      opts.on('-p', '--password=password', "Specifies the password for the Akamai user.") do |pass|
+      opts.on('-p', '--password PASSWORD', "Specifies the password for the Akamai user.") do |pass|
         @password = pass
       end
       
-      opts.on('-l', '--url=url', "Specifies the URL to purge.") do |pass|
+      opts.on('-l', '--url URL', "Specifies the URL to purge.") do |url|
         @url = url
       end
       
