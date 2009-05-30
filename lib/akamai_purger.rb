@@ -24,20 +24,19 @@ class AkamaiPurger
         @password = pass
       end
       
-      opts.on('-e', '--email-notification [EMAIL ADDRESSES]', "Specifies the e-mail addresses (comma separated) to receive the purge notification.") do |emails|
+      opts.on('-e', '--email [EMAILS]', "Specifies the e-mail addresses (comma separated) to receive the purge notification.") do |emails|
         @emails = emails
       end
       
     end
     
     @args = opts.parse!(args)
-    puts args
     @urls = args.join(',')
   end
   
   def assemble_options
     options = []
-    options << "email-notification=#{CGI.escape(@emails)}" if @emails
+    options << "email-notification=#{@emails}" if @emails
     options
   end
   
@@ -53,7 +52,7 @@ class AkamaiPurger
     result = driver.purgeRequest(@username, @password, '', assemble_options, @urls.split(','))
     
     if result.resultCode == '100'
-      puts "Purge request was successful.  Purge should be complete within #{result.estTime} seconds."
+      puts "Purge request was successful.  Purge should be complete within #{result.estTime.to_i/60} minutes."
     else
       puts "Purge request failed with the message '#{result.resultMsg}'."
     end
