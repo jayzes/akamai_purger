@@ -34,7 +34,6 @@ class AkamaiPurger
   end
   
   def run
-    parse_opts
     
     puts "Sending purge request for #{@url}."
     driver = SOAP::WSDLDriverFactory.new(WSDL_URL).create_rpc_driver
