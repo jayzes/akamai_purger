@@ -15,15 +15,15 @@ class AkamaiPurger
         exit 1
       end
       
-      opts.on('-u', '--user USER', 'Specifies the Akamai username to connect as.') do |user|
+      opts.on('-u', '--user [USER]', 'Specifies the Akamai username to connect as.') do |user|
         @username = user
       end
       
-      opts.on('-p', '--password PASSWORD', "Specifies the password for the Akamai user.") do |pass|
+      opts.on('-p', '--password [PASSWORD]', "Specifies the password for the Akamai user.") do |pass|
         @password = pass
       end
       
-      opts.on('-l', '--url URL', "Specifies the URL to purge.") do |url|
+      opts.on('-l', '--url [URL]', "Specifies the URL to purge.") do |url|
         @url = url
       end
       
@@ -34,6 +34,8 @@ class AkamaiPurger
   end
   
   def run
+    
+    puts "User, password, and URL must be supplied!" unless @username && @password && @url
     
     puts "Sending purge request for #{@url}."
     driver = SOAP::WSDLDriverFactory.new(WSDL_URL).create_rpc_driver
