@@ -6,7 +6,9 @@ sudo gem install jayzes-akamai_purger
 
 then run:
 
-akamai_purge -u <username> -p <password> -l <url_to_purge>
+akamai_purge -u <username> -p <password> -e <e-mail to notify> <urls_to_purge>
+
+username and password are required.  e-mail is optional.  Multiple URLs may be specified - just separate them with spaces.
 
 The gem will automatically make the SOAP call to run the cache purge with the given credentials.  Typically purges take 7 minutes to propagate fully.
 
